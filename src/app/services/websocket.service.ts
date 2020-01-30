@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class WebsocketService {
   public user: User = null;
 
   constructor(
-    private socket: Socket
+    private socket: Socket,
+    private router: Router
   ) {
 
     // Cargamos usuario desde localStorage si es que existe
@@ -24,6 +26,7 @@ export class WebsocketService {
     this.socket.on('connect', () => {
       console.log('Conectado al servidor');
       this.socketStatus = true;
+      this.loadStorage();
     });
 
     this.socket.on('disconnect', () => {
@@ -62,6 +65,21 @@ export class WebsocketService {
       });
 
     });
+
+  }
+
+  logoutWS() {
+
+    this.user = null;
+    localStorage.removeItem('user');
+
+    // Mandamos nombre: 'sin-nombre', ya que en el socket se omiten los usuarios sin-nombre
+    const payload = {
+      nombre: 'sin-nombre'
+    };
+
+    this.emit('configurar-usuario', payload, () => {});
+    this.router.navigateByUrl('');
 
   }
 

@@ -1,5 +1,8 @@
 <div class="p-3">
-  <h1>Usuario: <small>{{ wsService.user.nombre }}</small></h1>
+  <div class="d-flex">
+    <h1>Usuario: <small>{{ wsService.user.nombre }}</small></h1>
+    <button class="btn px-4 btn-danger ml-auto" (click)="logout()">Salir</button>
+  </div>
   <hr>
   <div class="row">
     <div class="col-6">
