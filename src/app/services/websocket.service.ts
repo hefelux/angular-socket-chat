@@ -78,6 +78,8 @@ export class WebsocketService {
       nombre: 'sin-nombre'
     };
 
+    // Usamos configurar-usuario del server socket, solo porque la logica nos sirve, puesto que omite del 
+    // listado de usuarios activos, los usuarios sin-nombre
     this.emit('configurar-usuario', payload, () => {});
     this.router.navigateByUrl('');
 
